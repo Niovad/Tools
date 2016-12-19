@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+ar_service $0 $1
