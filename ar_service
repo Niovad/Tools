@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+cd `dirname $0`
+service=`basename $1`
+[ -L $service ] && service=`readlink $service`
+
+display_name=`tr [:lower:] [:upper:] <<< $service`
+
+cd ../$service
+
+function start() {
+  [ -f $AR_TMP_DIR/$service.pid ] && echo -e "\033[30;43m$display_name ALREADY STARTED\033[0m" && exit
+  env LD_PRELOAD="" npm start > $AR_TMP_DIR/$service.stdout.log 2> $AR_TMP_DIR/$service.error.log &
+  echo $! > $AR_TMP_DIR/$service.pid
+  echo -e "\033[30;42m$display_name STARTED\033[0m"
+  wait
+  rm $AR_TMP_DIR/$service.pid
+  echo -e "\033[30;41m$display_name STOPPED\033[0m"
+}
+
+function stop() {
+  kill -s TERM $(cat $AR_TMP_DIR/$service.pid)
+}
+
+{
+  if [ $2 = start ]; then
+      start 2>&-
+  elif [ $2 = stop ]; then
+      stop
+  elif [ $2 = status ]; then
+      [ -f $AR_TMP_DIR/$service.pid ] && echo "RUNNING" || echo "INACTIVE"
+  elif [ $2 = test ]; then
+      env LD_PRELOAD="" npm test
+  elif [ $2 = restart ]; then
+      stop
+      inotifywait -e delete -q $AR_TMP_DIR/$service.pid
+      start 2>&-
+  fi
+} &
