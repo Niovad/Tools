@@ -8,7 +8,6 @@ I do not pretend to make a generic solution, it's only something I'm using by my
 It assumes that you have a directory architecture that look like the following:
 ```
 ├── api
-├── database
 ├── tools
 └── website
 ```
