@@ -10,7 +10,7 @@ cd ../$service
 
 function start() {
   [ -f $AR_TMP_DIR/$service.pid ] && echo -e "\033[30;43m$display_name ALREADY STARTED\033[0m" && exit
-  env LD_PRELOAD="" npm start > $AR_TMP_DIR/$service.stdout.log 2> $AR_TMP_DIR/$service.error.log &
+  env LD_PRELOAD="" npm start > $AR_TMP_DIR/$service.stdout.log 2> $AR_TMP_DIR/$service.stderr.log &
   echo $! > $AR_TMP_DIR/$service.pid
   echo -e "\033[30;42m$display_name STARTED\033[0m"
   wait
@@ -29,6 +29,10 @@ function stop() {
       stop
   elif [ $2 = status ]; then
       [ -f $AR_TMP_DIR/$service.pid ] && echo "RUNNING" || echo "INACTIVE"
+  elif [ $2 = stdout ]; then
+      cat $AR_TMP_DIR/$service.stdout.log
+  elif [ $2 = stderr ]; then
+      cat $AR_TMP_DIR/$service.stderr.log
   elif [ $2 = test ]; then
       env LD_PRELOAD="" npm test
   elif [ $2 = restart ]; then
