@@ -13,5 +13,5 @@ It assumes that you have a directory architecture that look like the following:
 ```
 It requires to put the file `env.sh` somewhere in your environment. This script will go to your third desktop, open `terminology` with three splits. The whole terminal is wrapped into tor, making it way safer.  
 An environment variable named `AR_TMP_DIR` is available within this term. It's the path to the stdout and stderr of the lauched services.  
-Each service has four commands: `start`, `stop`, `status` and `restart`.  
+Each service has six commands: `start`, `stop`, `status`, `restart`, `stdout` and `stderr`.  
 To add a service, you can copy an existing service `cp api .`. Nothing more. Symlinks are working too.
