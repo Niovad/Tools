@@ -15,3 +15,8 @@ It requires to put the file `env.sh` somewhere in your environment. This script 
 An environment variable named `AR_TMP_DIR` is available within this term. It's the path to the stdout and stderr of the lauched services.  
 Each service has six commands: `start`, `stop`, `status`, `restart`, `stdout` and `stderr`.  
 To add a service, you can copy an existing service `cp api .`. Nothing more. Symlinks are working too.
+
+## Wipe script
+
+The script `wipe.sh` will remove every trace of Archipelago from your computer (if you are using the directory architecture described above). It's not perfect now, but at least the source code is safely removed using the `shred` command.  
+The script will remove everything from its relative parent directory (including itself), so be careful.
