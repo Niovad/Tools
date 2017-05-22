@@ -39,5 +39,7 @@ function stop() {
       stop
       inotifywait -e delete -q $AR_TMP_DIR/$service.pid
       start 2>&-
+  else
+      echo -e "\033[30;45mUNKNOWN COMMAND \"$2\"\033[0m" && exit 1
   fi
 } &
